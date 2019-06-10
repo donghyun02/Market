@@ -1,18 +1,22 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
-import Vuex from 'vuex'
 
 import Main from '@/components/Main.vue'
 import Post from '@/components/Post.vue'
+import PostAdd from '@/components/PostAdd.vue'
+import Login from '@/components/Login.vue'
+import Register from '@/components/Register.vue'
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
-Vue.use(Vuex)
 
 const routes = [
   { path: '/', component: Main },
-  { path: '/post', component: Post }
+  { path: '/post/:postId', component: Post, name: 'Post' },
+  { path: '/post-add', component: PostAdd },
+  { path: '/login', component: Login },
+  { path: '/register', component: Register },
 ]
 
 const router = new VueRouter({
