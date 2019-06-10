@@ -34,6 +34,7 @@ export default {
 
   methods: {
     submit: function () {
+      const self = this
       axios.post(this.apiUrl + '/api/posts/', {
         title: this.title,
         content: this.content,
@@ -42,8 +43,8 @@ export default {
         headers: {
           Authorization: 'Bearer ' + this.accessToken
         }
-      }).then(function (response) {
-        console.log(response)
+      }).then(function () {
+        self.$router.push('/')
       })
     }
   },
