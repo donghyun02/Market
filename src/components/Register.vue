@@ -13,12 +13,14 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'Register',
+
   data: function () {
     return {
       username: '',
       password: ''
     }
   },
+
   methods: {
     register: function (e) {
       if (this.username === '' || this.password === '') {
@@ -39,6 +41,7 @@ export default {
       }
     }
   },
+  
   computed: {
     ...mapState({
       apiUrl: 'apiUrl'

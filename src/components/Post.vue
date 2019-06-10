@@ -19,9 +19,11 @@ import axios from 'axios'
 
 export default {
   name: 'Post',
+
   components: {
     CommentCard
   },
+
   data: function () {
     return {
       title: '',
@@ -29,27 +31,23 @@ export default {
       content: '',
       author: null,
       comment: '',
-      comments: []
+      comments: [],
+      accessToken: ''
     }
   },
+
   created: function () {
-    const self = this
-    axios.get(this.apiUrl + '/api/post/' + this.$route.params.postId, {
-      headers: {
-        Authorization: 'Bearer ' + this.accessToken
-      }
-    }).then(function (response) {
-      console.log(response.data)
-      const data = response.data
-      self.title = data.title
-      self.price = data.price
-      self.content = data.content
-      self.author = data.author.username
-      self.comments = data.comments
-    })
+    const access = this.$cookie.get('access')
+    if (access === null) {
+      this.$router.push('/login')
+    }
+    this.accessToken = this.$cookie.get('access')
+    this.getPost()
   },
+
   methods: {
     submitComment: function () {
+      const self = this
       axios.post(this.apiUrl + '/api/comments/', {
         post_id: this.$route.params.postId,
         content: this.comment
@@ -58,14 +56,31 @@ export default {
           Authorization: 'Bearer ' + this.accessToken
         }
       }).then(function (response) {
-        console.log(response)
+        self.comment = ''
+        self.getPost()
+      })
+    },
+
+    getPost: function () {
+      const self = this
+      axios.get(this.apiUrl + '/api/post/' + this.$route.params.postId, {
+        headers: {
+          Authorization: 'Bearer ' + this.accessToken
+        }
+      }).then(function (response) {
+        const data = response.data
+        self.title = data.title
+        self.price = data.price
+        self.content = data.content
+        self.author = data.author.username
+        self.comments = data.comments
       })
     }
   },
+  
   computed: {
     ...mapState({
-      apiUrl: 'apiUrl',
-      accessToken: 'accessToken'
+      apiUrl: 'apiUrl'
     })
   }
 }

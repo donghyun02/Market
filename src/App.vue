@@ -16,27 +16,6 @@ Vue.use(VueCookie)
 const store = new Vuex.Store({
   state: {
     apiUrl: 'http://localhost:8000',
-    accessToken: ''
-  },
-  mutations: {
-    setAccessToken (state, payload) {
-      state.accessToken = payload.accessToken
-    }
-  },
-  actions: {
-    getAccessToken (context, refreshToken) {
-      const self = this
-      axios.post(context.state.apiUrl + '/api/token/refresh/', {
-        refresh: refreshToken
-      }).then(function (response) {
-        context.commit('setAccessToken', {
-          accessToken: response.data.access
-        })
-      }).catch(function (error) {
-        self.$cookie.delete('refresh')
-        self.$router.push('/login')
-      })
-    }
   }
 })
 

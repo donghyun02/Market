@@ -8,6 +8,7 @@
 <script>
 export default {
   name: 'PostCard',
+  
   props: {
     postTitle: {
       required: true,

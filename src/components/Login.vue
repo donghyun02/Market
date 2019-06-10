@@ -14,12 +14,14 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'Login',
+
   data: function () {
     return {
       username: '',
       password: ''
     }
   },
+
   methods: {
     login: function (e) {
       const self = this
@@ -27,14 +29,14 @@ export default {
         username: self.username,
         password: self.password
       }).then(function (response) {
-        console.log(response)
-        self.$cookie.set('refreshToken', response.data.refresh, 7)
+        self.$cookie.set('refreshToken', response.data.refresh, 2)
         self.$router.push('/')
       }).catch(function (error) {
         console.log(error)
       })
     }
   },
+  
   computed: {
     ...mapState({
       apiUrl: 'apiUrl'
